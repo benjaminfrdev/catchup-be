@@ -12,8 +12,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AccountEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
 
     /* column phone number */
     @Column(name = "phone_number",nullable = false, unique = true)
