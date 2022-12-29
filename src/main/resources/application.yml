@@ -1,0 +1,11 @@
+#application.yml
+
+spring:
+  profiles: local
+    include: common, local
+
+
+---
+spring:
+  profiles:
+    active: local
