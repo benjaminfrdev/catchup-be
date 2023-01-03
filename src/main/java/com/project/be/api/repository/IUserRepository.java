@@ -1,5 +1,7 @@
 package com.project.be.api.repository;
 
-public class IUserRepository {
+import com.project.be.api.entity.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
+public interface IUserRepository extends JpaRepository<UserEntity, Long> {
 }

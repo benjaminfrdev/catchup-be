@@ -22,6 +22,7 @@ public class AuthController {
             throw new BadRequest();
         }
 
+
         if (this.userService.getUserByEmail(user.getEmail()) != null) {
             throw new Conflict();
         }
