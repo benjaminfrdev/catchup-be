@@ -4,10 +4,12 @@ package com.project.be.api.mapper.impl;
 import com.project.be.api.dto.UserDTO;
 import com.project.be.api.entity.UserEntity;
 import com.project.be.api.mapper.IUserMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class UserMapper implements IUserMapper {
     @Override
     public UserDTO mapToDTO(UserEntity userEntity) {
