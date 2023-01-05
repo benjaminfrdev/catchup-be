@@ -6,4 +6,8 @@ import com.project.be.api.entity.UserEntity;
 public interface IUserService extends IGenericService<UserDTO,Long> {
 
 
+    /**
+     * Get user by uuid
+     */
+     UserDTO getByUUID(String uuid);
 }

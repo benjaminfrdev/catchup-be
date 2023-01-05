@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+// AbstractEntities
+// se la abstract class....
 @MappedSuperclass
 public class SharedProperties {
     @Temporal(TemporalType.TIMESTAMP)

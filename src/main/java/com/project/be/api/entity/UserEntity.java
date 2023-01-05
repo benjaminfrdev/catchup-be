@@ -11,13 +11,11 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @Builder
-@Entity(name = "account")
+@Entity(name = "user")
 @NoArgsConstructor
 public class UserEntity implements Serializable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
+    @Id
     @Column(name = "uuid", nullable = false,unique = true)
     private String uuid;
 

@@ -7,16 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-public class CatchupApplication implements CommandLineRunner {
+public class CatchupApplication {
 
-	@Autowired
-	PasswordEncoder encoder;
 	public static void main(String[] args) {
 		SpringApplication.run(CatchupApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
 
-	}
 }

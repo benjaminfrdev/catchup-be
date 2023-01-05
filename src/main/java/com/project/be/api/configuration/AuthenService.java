@@ -1,18 +1,20 @@
 package com.project.be.api.configuration;
 
+import com.project.be.api.repository.IUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AccountService implements UserDetailsService {
+public class AuthenService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }
-//    private IUserRepository userRepository;
-//    public UserService(IUserRepository userRepository){
+//    private final IUserRepository userRepository;
+//    private
+//    public AccountService(IUserRepository userRepository){
 //        this.userRepository = userRepository;
 //    }
 //    @Override

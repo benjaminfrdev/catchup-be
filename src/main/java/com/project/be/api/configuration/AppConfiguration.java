@@ -1,5 +1,6 @@
 package com.project.be.api.configuration;
 
+import com.project.be.api.service.impl.AccountService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,10 +15,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class AppConfiguration {
-    private AccountService userService;
+    private AuthenService authService;
 
-    public AppConfiguration(AccountService userService) {
-        this.userService = userService;
+    public AppConfiguration(AuthenService authenService) {
+        this.authService = authenService ;
     }
 
 //    @Bean
@@ -33,7 +34,7 @@ public class AppConfiguration {
     @Bean
     public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
         AuthenticationManagerBuilder authBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authBuilder.userDetailsService(userService).passwordEncoder(passwordEncoder);
+        authBuilder.userDetailsService(authService).passwordEncoder(passwordEncoder);
         return authBuilder.build();
 
     }
@@ -47,9 +48,9 @@ public class AppConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("api/v1/*").permitAll()
+                .requestMatchers("api/v1/auth/hello").permitAll()
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                 .httpBasic()
                 .and()

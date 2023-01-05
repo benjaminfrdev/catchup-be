@@ -61,4 +61,8 @@ public class UserService implements IUserService {
     }
 
 
+    @Override
+    public UserDTO getByUUID(String uuid) {
+        return null;
+    }
 }

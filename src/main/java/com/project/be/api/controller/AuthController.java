@@ -1,6 +1,7 @@
 package com.project.be.api.controller;
 
 import com.project.be.api.configuration.jwtconfig.JwtTokenProvider;
+import com.project.be.api.dto.AccountDTO;
 import com.project.be.api.dto.UserDTO;
 import com.project.be.api.entity.AccountEntity;
 import com.project.be.api.exception.BadRequest;
@@ -40,7 +41,7 @@ public class AuthController {
     * */
     @PostMapping(value = "/registration")
     @ResponseStatus(HttpStatus.CREATED)
-    public Map<String, String> generateUser(@RequestBody @Validated AccountEntity account, BindingResult bdResult) {
+    public Map<String, String> generateUser(@RequestBody @Validated AccountDTO account, BindingResult bdResult) {
 
         if (bdResult.hasErrors()) {
             throw new BadRequest();
@@ -57,8 +58,9 @@ public class AuthController {
                                  .phoneNumber(account.getPhoneNumber())
                                  .name(account.getPhoneNumber())
                                  .build();
-        this.
         this.userService.insert(userDTO);
+
+        this.accountService.insert(account);
 
 //        Long userId = this.userService.generateUser(user).getId();
 //
@@ -69,8 +71,11 @@ public class AuthController {
 //        userKey.setExpiresAt(Util.calculateDate());
 //        userKey.setUserId(userId);
 
-        this.userService.generateUserKey(userKey);
         return Collections.singletonMap("message", "ok.");
+    }
+    @GetMapping(value = "/hello")
+    public String Hello(){
+        return "hello";
     }
 
 }
