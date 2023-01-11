@@ -1,5 +1,6 @@
 package com.project.be.api.controller;
 
+import com.project.be.api.configuration.CustomUserDetails;
 import com.project.be.api.configuration.jwtconfig.JwtTokenProvider;
 import com.project.be.api.dto.AccountDTO;
 import com.project.be.api.dto.LoginRequest;
@@ -10,6 +11,7 @@ import com.project.be.api.exception.BadRequest;
 import com.project.be.api.exception.Conflict;
 import com.project.be.api.service.IAccountService;
 import com.project.be.api.service.IUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,25 +28,15 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "api/v1/auth")
+@RequiredArgsConstructor
 public class AuthController {
     /* Constructor Injection */
     private final IAccountService accountService;
     private final IUserService userService;
     private final PasswordEncoder pwEncoderConfig;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider tokenProvider;
     private final AuthenticationManager authenicationManager;
 
-    public AuthController(IAccountService accountService,
-                          IUserService userService,
-                          PasswordEncoder pwEncoderConfig,
-                          JwtTokenProvider jwtTokenProvider,
-                          AuthenticationManager authenticationManager){
-        this.accountService = accountService;
-        this.userService = userService;
-        this.pwEncoderConfig = pwEncoderConfig;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.authenicationManager = authenticationManager;
-    }
 
     /*
     * Register Func
@@ -59,7 +51,7 @@ public class AuthController {
             throw new BadRequest();
         }
 
-        if(this.accountService.getAccountByPhoneNumber(account.getPhoneNumber()) != null) {
+        if(this.accountService.getAccountByPhoneNumber(account.getPhoneNumber()).isPresent()) {
                 throw new Conflict();
         }
 
@@ -92,6 +84,7 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Trả về jwt cho người dùng.
+
         String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
         return new LoginResponse(jwt);
     }

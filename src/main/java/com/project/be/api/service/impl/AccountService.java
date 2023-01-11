@@ -2,7 +2,6 @@ package com.project.be.api.service.impl;
 
 import com.project.be.api.dto.AccountDTO;
 import com.project.be.api.entity.AccountEntity;
-import com.project.be.api.entity.UserEntity;
 import com.project.be.api.exception.InternalServerError;
 import com.project.be.api.mapper.impl.AccountMapper;
 import com.project.be.api.repository.IAccountRepository;
@@ -10,6 +9,7 @@ import com.project.be.api.service.IAccountService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountService implements IAccountService {
@@ -22,10 +22,10 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public AccountEntity getAccountByPhoneNumber(String phoneNumber) {
+    public Optional<AccountEntity> getAccountByPhoneNumber(String phoneNumber) {
         try{
-            AccountEntity accountEntity = accountRepository.findByPhoneNumber(phoneNumber);
-            if(accountEntity != null ){
+            Optional<AccountEntity> accountEntity = accountRepository.findByPhoneNumber(phoneNumber);
+            if(accountEntity.isPresent()){
                 return accountEntity;
             }
             return null;
