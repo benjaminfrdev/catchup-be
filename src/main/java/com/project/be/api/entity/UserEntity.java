@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class UserEntity implements Serializable{
 
     @Id
-    @Column(name = "uuid", nullable = false,unique = true)
+    @Column(name = "uuid",unique = true)
     private String uuid;
 
     private String phoneNumber;

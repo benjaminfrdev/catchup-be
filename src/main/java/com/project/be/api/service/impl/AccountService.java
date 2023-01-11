@@ -44,6 +44,7 @@ public class AccountService implements IAccountService {
         try{
             accountRepository.save(accountMapper.mapToEntity(accountDTO));
         }catch (Exception e){
+            System.out.println(e.getMessage());
             throw new InternalServerError();
         }
     }

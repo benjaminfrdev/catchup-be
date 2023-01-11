@@ -37,7 +37,8 @@ public class UserService implements IUserService {
     public void insert(UserDTO userDTO) {
         try{
             logger.info("Start insert new user into Database",userDTO);
-            userRepository.save(userMapper.mapToEntity(userDTO));
+            UserEntity userEntity = userMapper.mapToEntity(userDTO);
+            userRepository.save(userEntity);
             logger.info("End insert new user into Database",userDTO);
         }catch (Exception e) {
             logger.error(e.getMessage());

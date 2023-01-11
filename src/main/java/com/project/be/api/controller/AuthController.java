@@ -2,6 +2,8 @@ package com.project.be.api.controller;
 
 import com.project.be.api.configuration.jwtconfig.JwtTokenProvider;
 import com.project.be.api.dto.AccountDTO;
+import com.project.be.api.dto.LoginRequest;
+import com.project.be.api.dto.LoginResponse;
 import com.project.be.api.dto.UserDTO;
 import com.project.be.api.entity.AccountEntity;
 import com.project.be.api.exception.BadRequest;
@@ -9,6 +11,10 @@ import com.project.be.api.exception.Conflict;
 import com.project.be.api.service.IAccountService;
 import com.project.be.api.service.IUserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -26,12 +32,18 @@ public class AuthController {
     private final IUserService userService;
     private final PasswordEncoder pwEncoderConfig;
     private final JwtTokenProvider jwtTokenProvider;
+    private final AuthenticationManager authenicationManager;
 
-    public AuthController(IAccountService accountService, IUserService userService, PasswordEncoder pwEncoderConfig, JwtTokenProvider jwtTokenProvider){
+    public AuthController(IAccountService accountService,
+                          IUserService userService,
+                          PasswordEncoder pwEncoderConfig,
+                          JwtTokenProvider jwtTokenProvider,
+                          AuthenticationManager authenticationManager){
         this.accountService = accountService;
         this.userService = userService;
         this.pwEncoderConfig = pwEncoderConfig;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.authenicationManager = authenticationManager;
     }
 
     /*
@@ -58,24 +70,29 @@ public class AuthController {
                                  .phoneNumber(account.getPhoneNumber())
                                  .name(account.getPhoneNumber())
                                  .build();
-        this.userService.insert(userDTO);
-
         this.accountService.insert(account);
-
-//        Long userId = this.userService.generateUser(user).getId();
-//
-//        UserKey userKey = new UserKey();
-//        userKey.setTokenType("Bearer");
-//        userKey.setToken(this.jwtService.generateJwt(userId, 365, userUuid));
-//        userKey.setRefreshToken(this.jwtService.generateJwt(userId, 365, userUuid));
-//        userKey.setExpiresAt(Util.calculateDate());
-//        userKey.setUserId(userId);
+        this.userService.insert(userDTO);
 
         return Collections.singletonMap("message", "ok.");
     }
-    @GetMapping(value = "/hello")
-    public String Hello(){
-        return "hello";
-    }
 
+    @PostMapping(value = "/login")
+    @ResponseStatus(HttpStatus.OK)
+    public LoginResponse authenticateUser(@RequestBody LoginRequest loginRequest) {
+        // Xác thực từ username và password.
+        Authentication authentication = authenicationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getPhoneNumber(),
+                        loginRequest.getPassword()
+                )
+        );
+
+        // Nếu không xảy ra exception tức là thông tin hợp lệ
+        // Set thông tin authentication vào Security Context
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Trả về jwt cho người dùng.
+        String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
+        return new LoginResponse(jwt);
+    }
 }
