@@ -38,12 +38,13 @@ public class JwtTokenProvider {
 
     public String generateToken(
             Map<String, Object> extraClaims,
-            UserDetails userDetails
+            CustomUserDetails userDetails
     ) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
+                .setId(userDetails.getUUID())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)

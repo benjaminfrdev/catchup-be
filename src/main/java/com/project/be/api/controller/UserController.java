@@ -1,20 +1,31 @@
 package com.project.be.api.controller;
 
 import com.project.be.api.configuration.jwtconfig.JwtTokenProvider;
+import com.project.be.api.dto.UserDTO;
+import com.project.be.api.service.IUserService;
+import com.project.be.api.service.impl.UserService;
+import com.project.be.api.util.Validation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/v1/user")
+@RequestMapping(value = "api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final JwtTokenProvider tokenProvider;
+    private final IUserService userService;
 
-    @GetMapping(value = "/hello")
-    public String hello(){
-        return "hlelloo";
+
+    @GetMapping(value = "/profile")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<UserDTO> getUserProfile(@PathVariable("id") String uuid){
+            UserDTO userDTO = userService.getByUUID(uuid);
+            return ResponseEntity.ok(userDTO);
     }
 }

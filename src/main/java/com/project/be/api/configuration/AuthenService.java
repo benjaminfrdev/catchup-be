@@ -27,7 +27,7 @@ public class AuthenService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }else{
             Optional<UserEntity> user = userRepository.findByPhoneNumber(username);
-            return new CustomUserDetails(user.get());
+            return new CustomUserDetails(user.get(),account.get());
         }
     }
 

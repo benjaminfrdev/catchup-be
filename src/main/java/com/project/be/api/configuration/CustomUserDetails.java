@@ -11,14 +11,22 @@ import java.util.Collection;
 import java.util.Collections;
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
-    private UserEntity userEntity;
-
+    private final UserEntity userEntity;
+    private final AccountEntity accountEntity;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
+    public String getUUID() {
+        return userEntity.getUuid();
+    }
+
+    @Override
+    public String getPassword() {
+        return accountEntity.getPassword();
+    }
 
 
     @Override

@@ -44,6 +44,7 @@ public class AppConfiguration {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/deploy/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

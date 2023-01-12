@@ -64,6 +64,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO getByUUID(String uuid) {
-        return null;
+        return this.userRepository.findById(uuid).isPresent()
+                ? this.userMapper.mapToDTO(this.userRepository.findById(uuid).get()) : null;
     }
 }
