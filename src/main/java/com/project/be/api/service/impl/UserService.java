@@ -26,7 +26,11 @@ public class UserService implements IUserService {
 
     @Override
     public List<UserDTO> getAll() {
-        return null;
+        try{
+            return !this.userRepository.findAll().isEmpty() ? this.userMapper.mapToListDTO(this.userRepository.findAll()) : null;
+        }catch (Exception e){
+            throw new InternalServerError();
+        }
     }
 
     /**
@@ -66,5 +70,10 @@ public class UserService implements IUserService {
     public UserDTO getByUUID(String uuid) {
         return this.userRepository.findById(uuid).isPresent()
                 ? this.userMapper.mapToDTO(this.userRepository.findById(uuid).get()) : null;
+    }
+
+    @Override
+    public List<UserDTO> findByKeyWord(String keyword) {
+        if()
     }
 }

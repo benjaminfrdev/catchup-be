@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
 
 import java.io.Serializable;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -28,6 +30,9 @@ public class UserEntity implements Serializable{
     private String avatar;
 
     private String status;
+
+    @OneToMany(mappedBy = "user")
+    Set<ContactEntity> contacts;
 
     @JsonIgnore
     private String createdDate;

@@ -6,6 +6,8 @@ import com.project.be.api.service.IUserService;
 import com.project.be.api.service.impl.UserService;
 import com.project.be.api.util.Validation;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,10 +24,16 @@ public class UserController {
     private final IUserService userService;
 
 
-    @GetMapping(value = "/profile")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UserDTO> getUserProfile(@PathVariable("id") String uuid){
-            UserDTO userDTO = userService.getByUUID(uuid);
-            return ResponseEntity.ok(userDTO);
+    public ResponseEntity<List<UserDTO>> getAllUser(){
+        List<UserDTO> lists = userService.getAll();
+        return lists != null ? ResponseEntity.ok(lists) : null;
+    }
+
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<UserDTO> getUserByKeyword(){
+        return null;
     }
 }

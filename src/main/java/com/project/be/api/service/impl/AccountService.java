@@ -24,11 +24,7 @@ public class AccountService implements IAccountService {
     @Override
     public Optional<AccountEntity> getAccountByPhoneNumber(String phoneNumber) {
         try{
-            Optional<AccountEntity> accountEntity = accountRepository.findByPhoneNumber(phoneNumber);
-            if(accountEntity.isPresent()){
-                return accountEntity;
-            }
-            return null;
+            return accountRepository.findByPhoneNumber(phoneNumber);
         }catch (Exception e){
             throw new InternalServerError();
         }
@@ -36,7 +32,11 @@ public class AccountService implements IAccountService {
 
     @Override
     public List<AccountDTO> getAll() {
-        return null;
+        try {
+            return null;
+        }catch (Exception e){
+            throw new InternalServerError();
+        }
     }
 
     @Override

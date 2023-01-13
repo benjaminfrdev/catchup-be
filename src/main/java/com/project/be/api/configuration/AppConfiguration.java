@@ -38,15 +38,15 @@ public class AppConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .cors()
-                .and()
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/deploy/**").permitAll()
+                .requestMatchers("/api/v1/auth/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
+                .and()
+                .cors()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
