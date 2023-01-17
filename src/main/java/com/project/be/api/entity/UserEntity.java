@@ -1,12 +1,15 @@
 package com.project.be.api.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -30,9 +33,6 @@ public class UserEntity implements Serializable{
     private String avatar;
 
     private String status;
-
-    @OneToMany(mappedBy = "user")
-    Set<ContactEntity> contacts;
 
     @JsonIgnore
     private String createdDate;

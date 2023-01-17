@@ -83,8 +83,7 @@ public class AuthController {
         // Set thông tin authentication vào Security Context
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Trả về jwt cho người dùng.
-
+        // Trả về jwt cho người dùng.fffffaasf
         String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
         return new LoginResponse(jwt);
     }

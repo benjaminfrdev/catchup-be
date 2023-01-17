@@ -31,9 +31,5 @@ public class UserController {
         return lists != null ? ResponseEntity.ok(lists) : null;
     }
 
-    @GetMapping()
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UserDTO> getUserByKeyword(){
-        return null;
-    }
+
 }

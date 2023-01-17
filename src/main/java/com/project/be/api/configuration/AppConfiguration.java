@@ -41,7 +41,7 @@ public class AppConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**")
+                .antMatchers("/api/v1/auth/**","/deploy/test")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

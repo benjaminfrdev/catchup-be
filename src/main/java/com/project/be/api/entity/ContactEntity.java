@@ -1,12 +1,12 @@
 package com.project.be.api.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
@@ -20,12 +20,12 @@ public class ContactEntity implements Serializable {
     ContactKey contactId;
 
     @ManyToOne
-    @MapsId("userId")
+    @MapsId(value = "userId")
     @JoinColumn(name = "user_id")
     UserEntity user;
 
     @ManyToOne
-    @MapsId("friendId")
+    @MapsId(value = "friendId")
     @JoinColumn(name = "friend_id")
     UserEntity friend;
 
